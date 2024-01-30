@@ -2,7 +2,7 @@ import 'package:contact_book/pages/add_contact.dart';
 import 'package:contact_book/pages/export_contact.dart';
 import 'package:contact_book/pages/import_contacts.dart';
 import 'package:contact_book/pages/import_device_contact.dart';
-import 'package:contact_book/services/functions/home_page_functions.dart';
+
 import 'package:contact_book/widgets/HomePageWidgets/buttons_to_nextpage.dart';
 import 'package:flutter/material.dart';
 
