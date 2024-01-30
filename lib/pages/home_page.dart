@@ -14,7 +14,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: const CustomFloatingButton(),
       appBar: AppBar(title: const Text("Contact Book !")),
-      body: const Center(child: Text("HomePage")),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text("DashBoard"),
+          Expanded(
+              child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) => const Center(child: Text("Item")),
+          ))
+        ],
+      )),
     );
   }
 }
