@@ -12,10 +12,9 @@ class ToPageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: deviceWidth * 0.5,
+      width: deviceWidth * 0.75,
       child: GestureDetector(
         onTap: () {
           Navigator.push(

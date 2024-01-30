@@ -11,35 +11,46 @@ class CustomFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceHeight = MediaQuery.of(context).size.height;
     return FloatingActionButton(
       onPressed: () {
         showBottomSheet(
             enableDrag: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
             context: context,
-            builder: (context) => const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ToPageButton(
-                          buttonIcon: Icons.add,
-                          label: 'Add Contacts',
-                          openPage: AddContacts()),
-                      ToPageButton(
-                          buttonIcon: Icons.download,
-                          label: 'Import Contacts',
-                          openPage: ImportContacts()),
-                      ToPageButton(
-                          buttonIcon: Icons.phone_android,
-                          label: 'Device Contacts',
-                          openPage: DeviceContacts()),
-                      ToPageButton(
-                          buttonIcon: Icons.upload,
-                          label: 'Export Contacts',
-                          openPage: ExportContacts()),
-                    ],
+            builder: (context) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: deviceHeight * 0.3,
+                    child: const Column(
+                      children: [
+                        Icon(Icons.horizontal_rule_rounded),
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ToPageButton(
+                                  buttonIcon: Icons.add,
+                                  label: 'Add Contacts',
+                                  openPage: AddContacts()),
+                              ToPageButton(
+                                  buttonIcon: Icons.download,
+                                  label: 'Import Contacts',
+                                  openPage: ImportContacts()),
+                              ToPageButton(
+                                  buttonIcon: Icons.phone_android,
+                                  label: 'Device Contacts',
+                                  openPage: DeviceContacts()),
+                              ToPageButton(
+                                  buttonIcon: Icons.upload,
+                                  label: 'Export Contacts',
+                                  openPage: ExportContacts()),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ));
       },
