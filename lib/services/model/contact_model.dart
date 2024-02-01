@@ -4,7 +4,7 @@ class Contacts {
   final String name;
   final String company;
   final String title;
-  final int phone;
+  final String phone;
   final String email;
   final Group group;
   

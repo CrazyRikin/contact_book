@@ -1,10 +1,12 @@
 import 'package:contact_book/services/model/contact_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 List<String> saveOptions = ["Save To Device", "Save To Google"];
 
 class ContactListProvider extends ChangeNotifier {
-  var fetchedContact;
+  FullContact fetchedContact = FullContact([], [], [], [],
+      StructuredName('', '', '', ''), null, null, null, null, [], []);
   Group defaultGroup = Group.work;
   String defaultSaveOption = 'Save To Google';
 
@@ -12,21 +14,21 @@ class ContactListProvider extends ChangeNotifier {
     Contacts(
         name: 'rikin',
         company: 'suas',
-        phone: 999999999,
+        phone: '999999999',
         title: 'flutter dev',
         email: 'xyz@gmail.com',
         group: Group.tech),
   ];
 
-  void addContact(String name, String company, int phone, String title,
-      String email, Group group) {
+  void addContact(String name, String? company, String phone, String? title,
+      String? email, Group? group) {
     registeredContacts.add(Contacts(
         name: name,
-        company: company,
-        title: title,
+        company: company!,
+        title: title!,
         phone: phone,
-        email: email,
-        group: group));
+        email: email!,
+        group: group!));
     notifyListeners();
   }
 
@@ -40,7 +42,8 @@ class ContactListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateFetchContact(value) {
+  void updateFetchContact(FullContact value) {
     fetchedContact = value;
+    notifyListeners();
   }
 }

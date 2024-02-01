@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:contact_book/services/model/contact_model.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class DeviceContacts extends StatefulWidget {
   const DeviceContacts({super.key});
@@ -22,6 +22,27 @@ class _DeviceContactsState extends State<DeviceContacts> {
             child: TextButton(
                 onPressed: () {
                   try {
+                    contactlistprovider.addContact(
+                        contactlistprovider.fetchedContact.name!.firstName
+                            .toString(),
+                        contactlistprovider.fetchedContact.company.toString(),
+                        contactlistprovider.fetchedContact.phones.toString(),
+                        contactlistprovider.fetchedContact.relations.toString(),
+                        contactlistprovider.fetchedContact.emails.toString(),
+                        contactlistprovider.defaultGroup);
+                    contactlistprovider.updateFetchContact(FullContact(
+                        [],
+                        [],
+                        [],
+                        [],
+                        StructuredName('', '', '', ''),
+                        null,
+                        null,
+                        null,
+                        null,
+                        [],
+                        []));
+
                     Navigator.pop(context);
                   } catch (e) {
                     print("error!");
@@ -36,30 +57,58 @@ class _DeviceContactsState extends State<DeviceContacts> {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: ListView(children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextButton(
-                    onPressed: () async {
-                      try {
-                        bool permission =
-                            await FlutterContactPicker.requestPermission();
-                        if (permission) {
-                          if (await FlutterContactPicker.hasPermission()) {
-                            var temp =
-                                await FlutterContactPicker.pickPhoneContact();
-                            contactlistprovider.updateFetchContact(temp);
-                            if (contactlistprovider.fetchedContact != null) {}
+            child: Column(
+              children: [
+                Column(children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TextButton(
+                        onPressed: () async {
+                          try {
+                            bool perm =
+                                await FlutterContactPicker.requestPermission();
+                            if (perm) {
+                              if (await FlutterContactPicker.hasPermission()) {
+                                contactlistprovider.updateFetchContact(
+                                    await FlutterContactPicker
+                                        .pickFullContact());
+                              }
+                            }
+                          } catch (e) {
+                            print("error encountered");
                           }
-                        }
-                      } catch (e) {
-                        print("error encountered");
-                      }
-                    },
-                    child: const Text("CLICK TO IMPORT DEVICE CONTACTS")),
-              ),
-              Text(contactlistprovider.fetchedContact.toString())
-            ]),
+                        },
+                        child: const Text("CLICK TO SELECT DEVICE CONTACT")),
+                  ),
+                  Row(
+                    children: [
+                      const Text("Select Group for the contact: "),
+                      const SizedBox(width: 20),
+                      DropdownButton(
+                        value: contactlistprovider.defaultGroup,
+                        onChanged: (value) {
+                          if (value == null) {
+                            return;
+                          }
+
+                          contactlistprovider.changeGroup(value);
+                        },
+                        items: Group.values
+                            .map(
+                              (group) => DropdownMenuItem(
+                                value: group,
+                                child: Text(group.name.toUpperCase()),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                  Text(
+                      "Selected Contact: ${contactlistprovider.fetchedContact.name!.firstName!.toUpperCase()}")
+                ]),
+              ],
+            ),
           ),
         ),
       ),

@@ -48,7 +48,7 @@ class _AddContactsState extends State<AddContacts> {
                     contactlistprovider.addContact(
                         nameController.text,
                         companyController.text,
-                        int.parse(phoneController.text),
+                        phoneController.text,
                         titleController.text,
                         workController.text,
                         contactlistprovider.defaultGroup);
