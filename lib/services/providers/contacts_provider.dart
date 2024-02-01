@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 List<String> saveOptions = ["Save To Device", "Save To Google"];
 
 class ContactListProvider extends ChangeNotifier {
+  var fetchedContact;
   Group defaultGroup = Group.work;
   String defaultSaveOption = 'Save To Google';
 
@@ -37,5 +38,9 @@ class ContactListProvider extends ChangeNotifier {
   void changeGroup(Group value) {
     defaultGroup = value;
     notifyListeners();
+  }
+
+  void updateFetchContact(value) {
+    fetchedContact = value;
   }
 }
