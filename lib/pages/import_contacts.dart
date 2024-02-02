@@ -2,6 +2,7 @@ import 'package:contact_book/services/model/contact_model.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ImportContacts extends StatelessWidget {
   const ImportContacts({super.key});
@@ -14,17 +15,19 @@ class ImportContacts extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
-                onPressed: () {
-                  try {
-                    Navigator.pop(context);
-                  } catch (e) {
-                    print("error!");
-                  }
-                },
-                child: const Text(
-                  "Done",
-                  style: TextStyle(fontSize: 20),
-                )),
+              onPressed: () {
+                try {
+                  contactlistprovider.updateResultFile(null);
+                  Navigator.pop(context);
+                } catch (e) {
+                  print("error!");
+                }
+              },
+              child: const Text(
+                "Done",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
           )
         ]),
         body: Center(
@@ -37,7 +40,13 @@ class ImportContacts extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextButton(
                         onPressed: () async {
-                          try {} catch (e) {
+                          try {
+                            contactlistprovider.updateResultFile(
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['csv', 'xlx', 'xlsx'],
+                            ));
+                          } catch (e) {
                             print("error encountered");
                           }
                         },
@@ -67,6 +76,16 @@ class ImportContacts extends StatelessWidget {
                       ),
                     ],
                   ),
+                  contactlistprovider.result == null
+                      ? const Text(
+                          "No File Selected",
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : const Text(
+                          "File Selected",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                  Text(contactlistprovider.result.toString())
                 ]),
               ],
             ),

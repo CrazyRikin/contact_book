@@ -11,14 +11,24 @@ class AddContacts extends StatefulWidget {
 }
 
 class _AddContactsState extends State<AddContacts> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController workController = TextEditingController();
+  
+  @override
+  void dispose() {
+    nameController.dispose();
+    companyController.dispose();
+    titleController.dispose();
+    phoneController.dispose();
+    workController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController companyController = TextEditingController();
-    TextEditingController titleController = TextEditingController();
-    TextEditingController phoneController = TextEditingController();
-    TextEditingController workController = TextEditingController();
-
     return Consumer<ContactListProvider>(
       builder: (context, contactlistprovider, child) => Scaffold(
         appBar: AppBar(centerTitle: true, actions: [

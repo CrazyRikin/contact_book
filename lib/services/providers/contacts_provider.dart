@@ -1,15 +1,20 @@
 import 'package:contact_book/services/model/contact_model.dart';
+import 'package:csv/csv.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 List<String> saveOptions = ["Save To Device", "Save To Google"];
 
 class ContactListProvider extends ChangeNotifier {
+  FilePickerResult? result;
+
   FullContact fetchedContact = FullContact([], [], [], [],
       StructuredName('', '', '', ''), null, null, null, null, [], []);
 
   Group defaultGroup = Group.work;
-  
+
   String defaultSaveOption = 'Save To Google';
 
   List<Contacts> registeredContacts = [
@@ -46,6 +51,11 @@ class ContactListProvider extends ChangeNotifier {
 
   void updateFetchContact(FullContact value) {
     fetchedContact = value;
+    notifyListeners();
+  }
+
+  void updateResultFile(value) {
+    result = value;
     notifyListeners();
   }
 }

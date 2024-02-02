@@ -40,6 +40,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   url_launcher: ^6.2.4
   fluttercontactpicker: ^4.7.0
+  file_picker: ^6.1.1
+  csv: ^5.1.1
   
 
 dev_dependencies:
