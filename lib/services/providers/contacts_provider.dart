@@ -7,7 +7,9 @@ List<String> saveOptions = ["Save To Device", "Save To Google"];
 class ContactListProvider extends ChangeNotifier {
   FullContact fetchedContact = FullContact([], [], [], [],
       StructuredName('', '', '', ''), null, null, null, null, [], []);
+
   Group defaultGroup = Group.work;
+  
   String defaultSaveOption = 'Save To Google';
 
   List<Contacts> registeredContacts = [
