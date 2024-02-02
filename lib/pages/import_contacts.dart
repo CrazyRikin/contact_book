@@ -46,6 +46,14 @@ class ImportContacts extends StatelessWidget {
                               type: FileType.custom,
                               allowedExtensions: ['csv', 'xlx', 'xlsx'],
                             ));
+                            print(contactlistprovider.result!.files.first.name);
+                            print(
+                                contactlistprovider.result!.files.first.bytes);
+                            print(contactlistprovider.result!.files.first.size);
+                            print(contactlistprovider
+                                .result!.files.first.extension);
+                            print(contactlistprovider.result!.files.first.path);
+                           
                           } catch (e) {
                             print("error encountered");
                           }

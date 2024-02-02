@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class ToPageButton extends StatelessWidget {
   const ToPageButton(
       {super.key,
-      required this.openPage,
+      required this.onPressed,
       required this.buttonIcon,
       required this.label});
-  final Widget openPage;
+  final Widget onPressed;
   final IconData buttonIcon;
   final String label;
 
@@ -18,7 +18,7 @@ class ToPageButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => openPage));
+              context, MaterialPageRoute(builder: (context) => onPressed));
         },
         child: Card(
             shape: const RoundedRectangleBorder(

@@ -27,7 +27,8 @@ class ContactListBuilder extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        contactlistprovider.registeredContacts[index].group.name
+                        contactlistprovider
+                            .registeredContacts[index].group.name
                             .toString()
                             .toUpperCase(),
                         style: TextStyle(
@@ -37,7 +38,8 @@ class ContactListBuilder extends StatelessWidget {
                     ),
                   ),
                   Text(
-                      contactlistprovider.registeredContacts[index].company
+                      contactlistprovider
+                          .registeredContacts[index].company
                           .toUpperCase(),
                       style: const TextStyle(fontSize: 12)),
                   Text(
