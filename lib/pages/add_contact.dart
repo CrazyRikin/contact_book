@@ -16,7 +16,7 @@ class _AddContactsState extends State<AddContacts> {
   TextEditingController titleController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController workController = TextEditingController();
-  
+
   @override
   void dispose() {
     nameController.dispose();
@@ -63,9 +63,7 @@ class _AddContactsState extends State<AddContacts> {
                         workController.text,
                         contactlistprovider.defaultGroup);
                     Navigator.pop(context);
-                  } catch (e) {
-                    print("error!");
-                  }
+                  } catch (e) {}
                 },
                 icon: const Icon(Icons.save_alt, size: 32)),
           )

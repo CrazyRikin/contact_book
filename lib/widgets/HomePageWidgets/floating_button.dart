@@ -2,7 +2,6 @@ import 'package:contact_book/pages/add_contact.dart';
 import 'package:contact_book/pages/import_contacts.dart';
 import 'package:contact_book/pages/import_device_contact.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
-
 import 'package:contact_book/widgets/HomePageWidgets/buttons_to_nextpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,7 @@ class CustomFloatingButton extends StatelessWidget {
                 height: deviceHeight * 0.3,
                 child: Column(
                   children: [
-                    const Icon(Icons.horizontal_rule_rounded),
+                    const Icon(Icons.horizontal_rule_rounded, size: 36),
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -49,19 +48,7 @@ class CustomFloatingButton extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 try {
-                                  contactlistprovider.dataExport();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      duration: Duration(seconds: 3),
-                                      backgroundColor: Colors.white,
-                                      content: Center(
-                                        child: Text(
-                                          'DATA EXPORTED SUCCESSFULLY ! CHECK DOWNLOADS.',
-                                          style: TextStyle(color: Colors.green),
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                  contactlistprovider.dataExport(context);
                                 } catch (e) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

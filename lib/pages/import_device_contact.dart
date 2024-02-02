@@ -12,6 +12,8 @@ class DeviceContacts extends StatefulWidget {
 }
 
 class _DeviceContactsState extends State<DeviceContacts> {
+  FullContact nullFunction = FullContact([], [], [], [],
+      StructuredName('', '', '', ''), null, null, null, null, [], []);
   @override
   Widget build(BuildContext context) {
     return Consumer<ContactListProvider>(
@@ -30,23 +32,10 @@ class _DeviceContactsState extends State<DeviceContacts> {
                         contactlistprovider.fetchedContact.relations.toString(),
                         contactlistprovider.fetchedContact.emails.toString(),
                         contactlistprovider.defaultGroup);
-                    contactlistprovider.updateFetchContact(FullContact(
-                        [],
-                        [],
-                        [],
-                        [],
-                        StructuredName('', '', '', ''),
-                        null,
-                        null,
-                        null,
-                        null,
-                        [],
-                        []));
+                    contactlistprovider.updateFetchContact(nullFunction);
 
                     Navigator.pop(context);
-                  } catch (e) {
-                    print("error!");
-                  }
+                  } catch (e) {}
                 },
                 child: const Text(
                   "Done",
@@ -74,9 +63,7 @@ class _DeviceContactsState extends State<DeviceContacts> {
                                         .pickFullContact());
                               }
                             }
-                          } catch (e) {
-                            print("error encountered");
-                          }
+                          } catch (e) {}
                         },
                         child: const Text("CLICK TO SELECT DEVICE CONTACT")),
                   ),

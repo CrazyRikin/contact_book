@@ -19,9 +19,7 @@ class ImportContacts extends StatelessWidget {
                 try {
                   contactlistprovider.updateResultFile(null);
                   Navigator.pop(context);
-                } catch (e) {
-                  print("error!");
-                }
+                } catch (e) {}
               },
               child: const Text(
                 "Done",
@@ -46,17 +44,7 @@ class ImportContacts extends StatelessWidget {
                               type: FileType.custom,
                               allowedExtensions: ['csv', 'xlx', 'xlsx'],
                             ));
-                            print(contactlistprovider.result!.files.first.name);
-                            print(
-                                contactlistprovider.result!.files.first.bytes);
-                            print(contactlistprovider.result!.files.first.size);
-                            print(contactlistprovider
-                                .result!.files.first.extension);
-                            print(contactlistprovider.result!.files.first.path);
-                           
-                          } catch (e) {
-                            print("error encountered");
-                          }
+                          } catch (e) {}
                         },
                         child: const Text("CLICK TO IMPORT FILE")),
                   ),

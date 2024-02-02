@@ -11,6 +11,9 @@ List<String> saveOptions = ["Save To Device", "Save To Google"];
 class ContactListProvider extends ChangeNotifier {
   FilePickerResult? result;
   String? csv;
+  List<List<dynamic>> listContacts = [];
+  List<dynamic> listContact = [];
+  var saveName = TextEditingController();
 
   FullContact fetchedContact = FullContact([], [], [], [],
       StructuredName('', '', '', ''), null, null, null, null, [], []);
@@ -61,9 +64,7 @@ class ContactListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void dataExport() async {
-    List<List<dynamic>> listContacts = [];
-    List<dynamic> listContact = [];
+  void dataExport(context) async {
     listContact.add('Name');
     listContact.add('Company');
     listContact.add('Title');
@@ -83,11 +84,64 @@ class ContactListProvider extends ChangeNotifier {
     csv = const ListToCsvConverter().convert(listContacts);
     String dir = await ExternalPath.getExternalStoragePublicDirectory(
         ExternalPath.DIRECTORY_DOWNLOADS);
-    print("dir $dir");
+
     String file = dir;
-    File f = File(file + ("/contacts.csv"));
-    f.writeAsString(csv!);
-    print(" export function called successfully");
+    showBottomSheet(
+        context: context,
+        builder: (context) => SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(children: [
+                    const Icon(Icons.horizontal_rule_rounded, size: 36),
+                    TextField(
+                        decoration: const InputDecoration(
+                            hintText: 'Enter save name',
+                            border: OutlineInputBorder()),
+                        controller: saveName),
+                    const SizedBox(height: 20),
+                    OutlinedButton(
+                        onPressed: () {
+                          if (saveName.text.isNotEmpty) {
+                            File f = File(
+                                file + ("/${saveName.text.trimRight()}.csv"));
+                            f.writeAsString(csv!);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 3),
+                                backgroundColor: Colors.white,
+                                content: Center(
+                                  child: Text(
+                                    'DATA EXPORTED SUCCESSFULLY ! CHECK DOWNLOADS.',
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                ),
+                              ),
+                            );
+                            saveName.clear();
+                            Navigator.pop(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 3),
+                                backgroundColor: Colors.white,
+                                content: Center(
+                                  child: Text(
+                                    'ENTER A VALID NAME',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text("SAVE FILE"))
+                  ]),
+                ),
+              ),
+            ));
 
     notifyListeners();
   }
