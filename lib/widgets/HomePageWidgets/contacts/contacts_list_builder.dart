@@ -42,6 +42,11 @@ class ContactListBuilder extends StatelessWidget {
                           .registeredContacts[index].company
                           .toUpperCase(),
                       style: const TextStyle(fontSize: 12)),
+                      Text(
+                      contactlistprovider
+                          .registeredContacts[index].title
+                          .toUpperCase(),
+                      style: const TextStyle(fontSize: 12)),
                   Text(
                       contactlistprovider.registeredContacts[index].email
                           .toUpperCase(),

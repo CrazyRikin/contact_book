@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:contact_book/services/model/contact_model.dart';
 import 'package:csv/csv.dart';
 import 'package:external_path/external_path.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 List<String> saveOptions = ["Save To Device", "Save To Google"];
 
 class ContactListProvider extends ChangeNotifier {
+  List<List<dynamic>> importedData = [];
+  String? filePath;
   String? csv;
   List<List<dynamic>> listContacts = [];
   List<dynamic> listContact = [];
@@ -54,6 +58,23 @@ class ContactListProvider extends ChangeNotifier {
 
   void updateFetchContact(FullContact value) {
     fetchedContact = value;
+    notifyListeners();
+  }
+
+  void pickFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) {
+      return;
+    }
+    print(" path : ${result.files.first.path}");
+    filePath = result.files.first.path;
+    final input = File(filePath!).openRead();
+    final fields = await input
+        .transform(utf8.decoder)
+        .transform(const CsvToListConverter())
+        .toList();
+    print(fields);
+    importedData = fields;
     notifyListeners();
   }
 

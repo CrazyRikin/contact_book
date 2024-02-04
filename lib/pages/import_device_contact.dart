@@ -49,7 +49,8 @@ class _DeviceContactsState extends State<DeviceContacts> {
             child: Column(
               children: [
                 Column(children: [
-                  SizedBox(
+                  Container(
+                    color: const Color.fromARGB(73, 124, 77, 255),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextButton(
                         onPressed: () async {
