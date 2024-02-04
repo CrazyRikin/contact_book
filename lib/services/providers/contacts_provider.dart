@@ -17,8 +17,7 @@ class ContactListProvider extends ChangeNotifier {
   List<dynamic> listContact = [];
   var saveName = TextEditingController();
 
-  FullContact fetchedContact = FullContact([], [], [], [],
-      StructuredName('', '', '', ''), null, null, null, null, [], []);
+  late FullContact fetchedContact;
 
   Group defaultGroup = Group.work;
 
@@ -34,6 +33,11 @@ class ContactListProvider extends ChangeNotifier {
         group: Group.tech)
   ];
 
+  void listSorter() {
+    registeredContacts.sort((a, b) => a.name.compareTo(b.name));
+    notifyListeners();
+  }
+
   void addContact(String name, String? company, String phone, String? title,
       String? email, Group? group) {
     registeredContacts.add(Contacts(
@@ -43,6 +47,7 @@ class ContactListProvider extends ChangeNotifier {
         phone: phone,
         email: email!,
         group: group!));
+    listSorter();
     notifyListeners();
   }
 
@@ -66,14 +71,12 @@ class ContactListProvider extends ChangeNotifier {
     if (result == null) {
       return;
     }
-    print(" path : ${result.files.first.path}");
     filePath = result.files.first.path;
     final input = File(filePath!).openRead();
     final fields = await input
         .transform(utf8.decoder)
         .transform(const CsvToListConverter())
         .toList();
-    print(fields);
     importedData = fields;
     notifyListeners();
   }

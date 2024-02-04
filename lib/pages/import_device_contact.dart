@@ -14,6 +14,7 @@ class DeviceContacts extends StatefulWidget {
 class _DeviceContactsState extends State<DeviceContacts> {
   FullContact nullFunction = FullContact([], [], [], [],
       StructuredName('', '', '', ''), null, null, null, null, [], []);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ContactListProvider>(
@@ -24,17 +25,22 @@ class _DeviceContactsState extends State<DeviceContacts> {
             child: TextButton(
                 onPressed: () {
                   try {
-                    contactlistprovider.addContact(
-                        contactlistprovider.fetchedContact.name!.firstName
-                            .toString(),
-                        contactlistprovider.fetchedContact.company.toString(),
-                        contactlistprovider.fetchedContact.phones.toString(),
-                        contactlistprovider.fetchedContact.relations.toString(),
-                        contactlistprovider.fetchedContact.emails.toString(),
-                        contactlistprovider.defaultGroup);
-                    contactlistprovider.updateFetchContact(nullFunction);
+                    if (contactlistprovider.fetchedContact
+                        .toString()
+                        .isNotEmpty) {
+                      contactlistprovider.addContact(
+                          contactlistprovider.fetchedContact.name!.firstName
+                              .toString(),
+                          contactlistprovider.fetchedContact.company.toString(),
+                          contactlistprovider.fetchedContact.phones.toString(),
+                          contactlistprovider.fetchedContact.relations
+                              .toString(),
+                          contactlistprovider.fetchedContact.emails.toString(),
+                          contactlistprovider.defaultGroup);
+                      contactlistprovider.updateFetchContact(nullFunction);
 
-                    Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
                   } catch (e) {}
                 },
                 child: const Text(
@@ -62,9 +68,34 @@ class _DeviceContactsState extends State<DeviceContacts> {
                                 contactlistprovider.updateFetchContact(
                                     await FlutterContactPicker
                                         .pickFullContact());
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    duration: Duration(seconds: 1),
+                                    backgroundColor: Colors.white,
+                                    content: Center(
+                                      child: Text(
+                                        'Contact picked successfully',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    ),
+                                  ),
+                                );
                               }
                             }
-                          } catch (e) {}
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 3),
+                                backgroundColor: Colors.white,
+                                content: Center(
+                                  child: Text(
+                                    'Unable to select contact',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: const Text("CLICK TO SELECT DEVICE CONTACT")),
                   ),
@@ -92,8 +123,6 @@ class _DeviceContactsState extends State<DeviceContacts> {
                       ),
                     ],
                   ),
-                  Text(
-                      "Selected Contact: ${contactlistprovider.fetchedContact.name!.firstName!.toUpperCase()}")
                 ]),
               ],
             ),

@@ -30,7 +30,18 @@ class ImportContacts extends StatelessWidget {
                   contactlistprovider.importedData = [];
                   Navigator.pop(context);
                 } catch (e) {
-                  print("import error");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      duration: Duration(seconds: 3),
+                      backgroundColor: Colors.white,
+                      content: Center(
+                        child: Text(
+                          'Failed to import contacts!',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  );
                 }
               },
               child: const Text(
@@ -55,7 +66,18 @@ class ImportContacts extends StatelessWidget {
                             try {
                               contactlistprovider.pickFile();
                             } catch (e) {
-                              print("error on select");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  duration: Duration(seconds: 3),
+                                  backgroundColor: Colors.white,
+                                  content: Center(
+                                    child: Text(
+                                      'Unable to select file!',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ),
+                              );
                             }
                           },
                           child: const Text(

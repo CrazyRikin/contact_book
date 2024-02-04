@@ -63,7 +63,20 @@ class _AddContactsState extends State<AddContacts> {
                         workController.text,
                         contactlistprovider.defaultGroup);
                     Navigator.pop(context);
-                  } catch (e) {}
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        duration: Duration(seconds: 3),
+                        backgroundColor: Colors.white,
+                        content: Center(
+                          child: Text(
+                            'Failed to add contact',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                 },
                 icon: const Icon(Icons.save_alt, size: 32)),
           )
