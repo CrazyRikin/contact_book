@@ -21,10 +21,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("DashBoard"),
-              Expanded(child: ContactListBuilder())
-            ],
+            children: [Expanded(child: ContactListBuilder())],
           ),
         ),
       ),
