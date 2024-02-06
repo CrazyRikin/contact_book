@@ -43,8 +43,8 @@ class ContactListProvider extends ChangeNotifier {
         phone: phone,
         email: email!,
         group: group!));
-    postContact(const Uuid().v4(), name, company, title, phone, email,
-        group.toString());
+    postContact(
+        const Uuid().v4(), name, company, title, phone, email, group.name);
     listSorter();
     notifyListeners();
   }
@@ -59,6 +59,8 @@ class ContactListProvider extends ChangeNotifier {
         phone: phone,
         email: email!,
         group: group!));
+    postContact(
+        const Uuid().v4(), name, company, title, phone, email, group.name);
     listSorter();
     notifyListeners();
   }

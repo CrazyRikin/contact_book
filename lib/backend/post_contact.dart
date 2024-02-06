@@ -12,19 +12,17 @@ Future<void> postContact(String id, String name, String company, String title,
       'Content-Type': 'application/json'
     };
 
-    final body = [
-      {
-        "name": name,
-        "title": title,
-        "company": company,
-        "mobile": phone,
-        "alternateMobile": "",
-        "email": email,
-        "image": "",
-        "groupCategory": group,
-        "notes": ""
-      }
-    ];
+    final body = {
+      "name": name,
+      "title": title,
+      "company": company,
+      "mobile": phone,
+      "alternateMobile": "",
+      "email": email,
+      "image": "",
+      "groupCategory": group,
+      "notes": ""
+    };
 
     final request = http.Request('POST', url)
       ..headers.addAll(headers)
