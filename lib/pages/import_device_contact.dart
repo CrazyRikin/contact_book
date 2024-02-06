@@ -36,7 +36,8 @@ class _DeviceContactsState extends State<DeviceContacts> {
                           contactlistprovider.fetchedContact.relations
                               .toString(),
                           contactlistprovider.fetchedContact.emails.toString(),
-                          contactlistprovider.defaultGroup);
+                          contactlistprovider.defaultGroup,
+                          contactlistprovider.defaultDepartment);
                       contactlistprovider.updateFetchContact(nullFunction);
 
                       Navigator.pop(context);
@@ -101,18 +102,22 @@ class _DeviceContactsState extends State<DeviceContacts> {
                   ),
                   Row(
                     children: [
-                      const Text("Select Group for the contact: "),
-                      const SizedBox(width: 20),
+                      const Text(
+                        "Department",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Spacer(),
                       DropdownButton(
-                        value: contactlistprovider.defaultGroup,
+                        value: contactlistprovider.defaultDepartment,
                         onChanged: (value) {
                           if (value == null) {
                             return;
                           }
 
-                          contactlistprovider.changeGroup(value);
+                          contactlistprovider.changeDepartment(value);
                         },
-                        items: Group.values
+                        items: Department.values
                             .map(
                               (group) => DropdownMenuItem(
                                 value: group,
@@ -122,7 +127,7 @@ class _DeviceContactsState extends State<DeviceContacts> {
                             .toList(),
                       ),
                     ],
-                  ),
+                  )
                 ]),
               ],
             ),

@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:uuid/uuid.dart';
 
-List<String> saveOptions = ["Save To Device", "Save To Google"];
-
 class ContactListProvider extends ChangeNotifier {
   List<List<dynamic>> importedData = [];
   String? filePath;
@@ -25,7 +23,7 @@ class ContactListProvider extends ChangeNotifier {
 
   Group defaultGroup = Group.others;
 
-  String defaultSaveOption = 'Save To Google';
+  Department defaultDepartment = Department.marketing;
 
   List<Contacts> registeredContacts = [];
 
@@ -35,22 +33,24 @@ class ContactListProvider extends ChangeNotifier {
   }
 
   void addContact(String name, String? company, String phone, String? title,
-      String? email, Group? group) {
+      String? email, Group? group, Department? dept) {
     registeredContacts.add(Contacts.addId(
         name: name,
         company: company!,
         title: title!,
         phone: phone,
         email: email!,
-        group: group!));
+        group: group!,
+        dept: dept!));
     postContact(
         const Uuid().v4(), name, company, title, phone, email, group.name);
     listSorter();
     notifyListeners();
   }
 
-  void addContactFromImport(String id, String name, String? company,
-      String? title, String phone, String? email, Group? group) {
+  void addContactFromImport(String name, String? company, String? title,
+      String phone, String? email, Group? group, Department? dept) {
+    final id = const Uuid().v4();
     registeredContacts.add(Contacts(
         id: id,
         name: name,
@@ -58,10 +58,9 @@ class ContactListProvider extends ChangeNotifier {
         title: title!,
         phone: phone,
         email: email!,
-        group: group!));
-    postContact(
-        const Uuid().v4(), name, company, title, phone, email, group.name);
-    listSorter();
+        group: group!,
+        dept: dept!));
+    postContact(id, name, company, title, phone, email, group.name);
     notifyListeners();
   }
 
@@ -69,7 +68,6 @@ class ContactListProvider extends ChangeNotifier {
     var response = await makeCall();
     var responseList = response.contacts;
     for (final element in responseList!) {
-      
       registeredContacts.add(Contacts(
           id: element.sId.toString(),
           name: element.name.toString(),
@@ -77,9 +75,9 @@ class ContactListProvider extends ChangeNotifier {
           title: element.title.toString(),
           phone: element.mobile.toString(),
           email: element.email.toString(),
-          group: defaultGroup));
+          group: defaultGroup,
+          dept: defaultDepartment));
     }
-
     listSorter();
     notifyListeners();
   }
@@ -92,14 +90,34 @@ class ContactListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSaveOption(String value) {
-    defaultSaveOption = value;
+  void changeDepartment(Department dept) {
+    defaultDepartment = dept;
     notifyListeners();
   }
 
   void changeGroup(Group value) {
     defaultGroup = value;
     notifyListeners();
+  }
+
+  int hrCount() {
+    final copy = registeredContacts;
+    final count = copy.where((element) => element.dept == Department.hr).length;
+    return count;
+  }
+
+  int techCount() {
+    final copy = registeredContacts;
+    final count =
+        copy.where((element) => element.dept == Department.tech).length;
+    return count;
+  }
+
+  int marketingCount() {
+    final copy = registeredContacts;
+    final count =
+        copy.where((element) => element.dept == Department.marketing).length;
+    return count;
   }
 
   void updateFetchContact(FullContact value) {

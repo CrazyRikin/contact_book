@@ -43,7 +43,8 @@ class _AddContactsState extends State<AddContacts> {
                         phoneController.text,
                         titleController.text,
                         workController.text,
-                        contactlistprovider.defaultGroup);
+                        contactlistprovider.defaultGroup,
+                        contactlistprovider.defaultDepartment);
                     Navigator.pop(context);
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -141,6 +142,34 @@ class _AddContactsState extends State<AddContacts> {
                           contactlistprovider.changeGroup(value);
                         },
                         items: Group.values
+                            .map(
+                              (group) => DropdownMenuItem(
+                                value: group,
+                                child: Text(group.name.toUpperCase()),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Department",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Spacer(),
+                      DropdownButton(
+                        value: contactlistprovider.defaultDepartment,
+                        onChanged: (value) {
+                          if (value == null) {
+                            return;
+                          }
+
+                          contactlistprovider.changeDepartment(value);
+                        },
+                        items: Department.values
                             .map(
                               (group) => DropdownMenuItem(
                                 value: group,

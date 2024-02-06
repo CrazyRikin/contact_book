@@ -20,13 +20,13 @@ class ImportContacts extends StatelessWidget {
                       index < contactlistprovider.importedData.length;
                       index++) {
                     contactlistprovider.addContactFromImport(
-                        contactlistprovider.importedData[index][0].toString(),
                         contactlistprovider.importedData[index][1].toString(),
                         contactlistprovider.importedData[index][2].toString(),
                         contactlistprovider.importedData[index][3].toString(),
                         contactlistprovider.importedData[index][4].toString(),
                         contactlistprovider.importedData[index][5].toString(),
-                        contactlistprovider.defaultGroup);
+                        contactlistprovider.defaultGroup,
+                        contactlistprovider.defaultDepartment);
                   }
                   print(contactlistprovider.importedData);
                   contactlistprovider.importedData = [];
@@ -101,20 +101,21 @@ class ImportContacts extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          "Select Group for the file: ",
-                          style: TextStyle(fontSize: 18),
+                          "Department",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 20),
+                        const Spacer(),
                         DropdownButton(
-                          value: contactlistprovider.defaultGroup,
+                          value: contactlistprovider.defaultDepartment,
                           onChanged: (value) {
                             if (value == null) {
                               return;
                             }
 
-                            contactlistprovider.changeGroup(value);
+                            contactlistprovider.changeDepartment(value);
                           },
-                          items: Group.values
+                          items: Department.values
                               .map(
                                 (group) => DropdownMenuItem(
                                   value: group,
@@ -124,7 +125,7 @@ class ImportContacts extends StatelessWidget {
                               .toList(),
                         ),
                       ],
-                    ),
+                    )
                   ]),
                 ),
               ],
