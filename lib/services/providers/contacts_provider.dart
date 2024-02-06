@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:contact_book/backend/contact_list_fetch.dart';
+import 'package:contact_book/backend/delete_contact.dart';
+import 'package:contact_book/backend/post_contact.dart';
 import 'package:contact_book/services/model/contact_model.dart';
 import 'package:csv/csv.dart';
 import 'package:external_path/external_path.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
+import 'package:uuid/uuid.dart';
 
 List<String> saveOptions = ["Save To Device", "Save To Google"];
 
@@ -40,6 +43,8 @@ class ContactListProvider extends ChangeNotifier {
         phone: phone,
         email: email!,
         group: group!));
+    postContact(const Uuid().v4(), name, company, title, phone, email,
+        group.toString());
     listSorter();
     notifyListeners();
   }
@@ -77,7 +82,10 @@ class ContactListProvider extends ChangeNotifier {
   }
 
   void deleteContact(index) {
+    print(registeredContacts[index].id);
+    deleteContactApi(registeredContacts[index].id);
     registeredContacts.removeAt(index);
+
     notifyListeners();
   }
 
