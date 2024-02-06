@@ -69,6 +69,7 @@ class ContactListProvider extends ChangeNotifier {
     var response = await makeCall();
     var responseList = response.contacts;
     for (final element in responseList!) {
+      
       registeredContacts.add(Contacts(
           id: element.sId.toString(),
           name: element.name.toString(),

@@ -32,24 +32,6 @@ class _AddContactsState extends State<AddContacts> {
     return Consumer<ContactListProvider>(
       builder: (context, contactlistprovider, child) => Scaffold(
         appBar: AppBar(centerTitle: true, actions: [
-          DropdownButton(
-            value: contactlistprovider.defaultSaveOption,
-            onChanged: (value) {
-              if (value == null) {
-                return;
-              }
-
-              contactlistprovider.changeSaveOption(value);
-            },
-            items: saveOptions
-                .map(
-                  (option) => DropdownMenuItem(
-                    value: option,
-                    child: Text(option.toUpperCase()),
-                  ),
-                )
-                .toList(),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(

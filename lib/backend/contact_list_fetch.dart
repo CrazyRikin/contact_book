@@ -18,7 +18,7 @@ Future<_FetchList> makeCall() async {
 class _FetchList {
   List<_Contacts>? contacts;
 
-  _FetchList({contacts});
+  _FetchList(contacts);
 
   _FetchList.fromJson(Map<String, dynamic> json) {
     if (json['contacts'] != null) {
@@ -27,14 +27,6 @@ class _FetchList {
         contacts!.add(_Contacts.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (contacts != null) {
-      data['contacts'] = contacts!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -52,19 +44,8 @@ class _Contacts {
   String? alternateMobile;
   String? notes;
 
-  _Contacts(
-      {groupCategory,
-      sId,
-      name,
-      company,
-      title,
-      mobile,
-      email,
-      image,
-      userId,
-      iV,
-      alternateMobile,
-      notes});
+  _Contacts(groupCategory, sId, name, company, title, mobile, email, image,
+      userId, iV, alternateMobile, notes);
 
   _Contacts.fromJson(Map<String, dynamic> json) {
     groupCategory = json['groupCategory'];
@@ -79,22 +60,5 @@ class _Contacts {
     iV = json['__v'];
     alternateMobile = json['alternateMobile'];
     notes = json['notes'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['groupCategory'] = groupCategory;
-    data['_id'] = sId;
-    data['name'] = name;
-    data['company'] = company;
-    data['title'] = title;
-    data['mobile'] = mobile;
-    data['email'] = email;
-    data['image'] = image;
-    data['userId'] = userId;
-    data['__v'] = iV;
-    data['alternateMobile'] = alternateMobile;
-    data['notes'] = notes;
-    return data;
   }
 }

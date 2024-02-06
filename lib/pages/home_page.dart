@@ -1,4 +1,3 @@
-import 'package:contact_book/backend/contact_list_fetch.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
 import 'package:contact_book/widgets/HomePageWidgets/contacts/contacts_list_builder.dart';
 import 'package:contact_book/widgets/HomePageWidgets/floating_button.dart';
