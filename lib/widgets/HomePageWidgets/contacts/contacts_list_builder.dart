@@ -51,7 +51,10 @@ class ContactListBuilder extends StatelessWidget {
                 ]),
                 const Spacer(),
                 IconButton.filled(
-                    onPressed: () {}, icon: const Icon(Icons.call))
+                    onPressed: () {
+                      contactlistprovider.deleteContact(index);
+                    },
+                    icon: const Icon(Icons.delete))
               ]),
             ),
           ),

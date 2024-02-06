@@ -76,6 +76,11 @@ class ContactListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteContact(index) {
+    registeredContacts.removeAt(index);
+    notifyListeners();
+  }
+
   void changeSaveOption(String value) {
     defaultSaveOption = value;
     notifyListeners();
