@@ -16,17 +16,19 @@ class ImportContacts extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 try {
-                  for (int index = 1;
+                  for (int index = 2;
                       index < contactlistprovider.importedData.length;
                       index++) {
-                    contactlistprovider.addContact(
+                    contactlistprovider.addContactFromImport(
                         contactlistprovider.importedData[index][0].toString(),
                         contactlistprovider.importedData[index][1].toString(),
-                        contactlistprovider.importedData[index][3].toString(),
                         contactlistprovider.importedData[index][2].toString(),
+                        contactlistprovider.importedData[index][3].toString(),
                         contactlistprovider.importedData[index][4].toString(),
+                        contactlistprovider.importedData[index][5].toString(),
                         contactlistprovider.defaultGroup);
                   }
+                  print(contactlistprovider.importedData);
                   contactlistprovider.importedData = [];
                   Navigator.pop(context);
                 } catch (e) {

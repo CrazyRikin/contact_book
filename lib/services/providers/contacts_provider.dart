@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:contact_book/backend/contact_list_fetch.dart';
 import 'package:contact_book/services/model/contact_model.dart';
 import 'package:csv/csv.dart';
 import 'package:external_path/external_path.dart';
@@ -19,19 +20,11 @@ class ContactListProvider extends ChangeNotifier {
 
   late FullContact fetchedContact;
 
-  Group defaultGroup = Group.work;
+  Group defaultGroup = Group.others;
 
   String defaultSaveOption = 'Save To Google';
 
-  List<Contacts> registeredContacts = [
-    Contacts(
-        name: 'rikin',
-        company: 'suas',
-        phone: '999999999',
-        title: 'flutter dev',
-        email: 'xyz@gmail.com',
-        group: Group.tech)
-  ];
+  List<Contacts> registeredContacts = [];
 
   void listSorter() {
     registeredContacts.sort((a, b) => a.name.compareTo(b.name));
@@ -40,13 +33,45 @@ class ContactListProvider extends ChangeNotifier {
 
   void addContact(String name, String? company, String phone, String? title,
       String? email, Group? group) {
-    registeredContacts.add(Contacts(
+    registeredContacts.add(Contacts.addId(
         name: name,
         company: company!,
         title: title!,
         phone: phone,
         email: email!,
         group: group!));
+    listSorter();
+    notifyListeners();
+  }
+
+  void addContactFromImport(String id, String name, String? company,
+      String? title, String phone, String? email, Group? group) {
+    registeredContacts.add(Contacts(
+        id: id,
+        name: name,
+        company: company!,
+        title: title!,
+        phone: phone,
+        email: email!,
+        group: group!));
+    listSorter();
+    notifyListeners();
+  }
+
+  void loadContactsList() async {
+    var response = await makeCall();
+    var responseList = response.contacts;
+    for (final element in responseList!) {
+      registeredContacts.add(Contacts(
+          id: element.sId.toString(),
+          name: element.name.toString(),
+          company: element.company.toString(),
+          title: element.title.toString(),
+          phone: element.mobile.toString(),
+          email: element.email.toString(),
+          group: defaultGroup));
+    }
+
     listSorter();
     notifyListeners();
   }
@@ -82,19 +107,23 @@ class ContactListProvider extends ChangeNotifier {
   }
 
   void dataExport(context) async {
+    listContact.add('Sid');
     listContact.add('Name');
     listContact.add('Company');
     listContact.add('Title');
     listContact.add('Phone');
+    listContact.add('email');
     listContact.add('Group');
     listContacts.add(listContact);
 
     for (int i = 0; i < registeredContacts.length; i++) {
       List<dynamic> listContact = [];
+      listContact.add(registeredContacts[i].id);
       listContact.add(registeredContacts[i].name);
       listContact.add(registeredContacts[i].company);
       listContact.add(registeredContacts[i].title);
       listContact.add(registeredContacts[i].phone);
+      listContact.add(registeredContacts[i].email);
       listContact.add(registeredContacts[i].group);
       listContacts.add(listContact);
     }
