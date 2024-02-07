@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +34,7 @@ class _DeviceContactsState extends State<DeviceContacts> {
                           contactlistprovider.fetchedContact.name!.firstName
                               .toString(),
                           contactlistprovider.fetchedContact.company.toString(),
-                          contactlistprovider.fetchedContact.phones.toString(),
+                          contactlistprovider.fetchedContact.phones[0].toString(),
                           contactlistprovider.fetchedContact.relations
                               .toString(),
                           contactlistprovider.fetchedContact.emails.toString(),

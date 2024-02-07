@@ -28,7 +28,7 @@ class ImportContacts extends StatelessWidget {
                         contactlistprovider.defaultGroup,
                         contactlistprovider.defaultDepartment);
                   }
-                  print(contactlistprovider.importedData);
+
                   contactlistprovider.importedData = [];
                   Navigator.pop(context);
                 } catch (e) {

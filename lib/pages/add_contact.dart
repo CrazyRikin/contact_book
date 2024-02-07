@@ -35,7 +35,7 @@ class _AddContactsState extends State<AddContacts> {
         appBar: AppBar(centerTitle: true, actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IconButton(
+            child: TextButton(
                 onPressed: () {
                   try {
                     if (nameController.text.isEmpty ||
@@ -69,7 +69,7 @@ class _AddContactsState extends State<AddContacts> {
                     );
                   }
                 },
-                icon: const Icon(Icons.save_alt, size: 32)),
+                child: const Text("SAVE", style: TextStyle(fontSize: 18))),
           )
         ]),
         body: Center(

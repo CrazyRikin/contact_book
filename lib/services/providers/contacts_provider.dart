@@ -28,7 +28,7 @@ class ContactListProvider extends ChangeNotifier {
   List<Contacts> registeredContacts = [];
 
   void listSorter() {
-    registeredContacts.sort((a, b) => a.name.compareTo(b.name));
+    registeredContacts.sort((a, b) => a.name.toUpperCase().compareTo(b.name.toUpperCase()));
     notifyListeners();
   }
 
@@ -83,7 +83,6 @@ class ContactListProvider extends ChangeNotifier {
   }
 
   void deleteContact(index) {
-    print(registeredContacts[index].id);
     deleteContactApi(registeredContacts[index].id);
     registeredContacts.removeAt(index);
 

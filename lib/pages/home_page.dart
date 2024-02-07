@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(Duration.zero).then((value) {
       Provider.of<ContactListProvider>(context, listen: false)
           .loadContactsList();
-      print("success");
     });
     super.initState();
   }

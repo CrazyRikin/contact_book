@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:contact_book/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -28,17 +30,6 @@ Future<void> postContact(String id, String name, String company, String title,
       ..headers.addAll(headers)
       ..body = jsonEncode(body);
 
-    final response = await http.Client().send(request);
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
-      print('Response body: ${await response.stream.bytesToString()}');
-    }
-  } catch (error, stackTrace) {
-    print('Error making the request: $error');
-    print('Stack trace: $stackTrace');
-  }
+     await http.Client().send(request);
+  } catch (error) {}
 }

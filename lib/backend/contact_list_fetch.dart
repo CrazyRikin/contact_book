@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:contact_book/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future<_FetchList> makeCall() async {
+Future<FetchList> makeCall() async {
   final response = await http.get(
     Uri.parse('https://stage.app.studiovity.com/api/v1/contactbook/get'),
     headers: {
@@ -12,25 +12,25 @@ Future<_FetchList> makeCall() async {
   );
   final responseJson = jsonDecode(response.body) as Map<String, dynamic>;
 
-  return _FetchList.fromJson(responseJson);
+  return FetchList.fromJson(responseJson);
 }
 
-class _FetchList {
-  List<_Contacts>? contacts;
+class FetchList {
+  List<ContactsAPI>? contacts;
 
-  _FetchList(contacts);
+  FetchList(contacts);
 
-  _FetchList.fromJson(Map<String, dynamic> json) {
+  FetchList.fromJson(Map<String, dynamic> json) {
     if (json['contacts'] != null) {
-      contacts = <_Contacts>[];
+      contacts = <ContactsAPI>[];
       json['contacts'].forEach((v) {
-        contacts!.add(_Contacts.fromJson(v));
+        contacts!.add(ContactsAPI.fromJson(v));
       });
     }
   }
 }
 
-class _Contacts {
+class ContactsAPI {
   String? groupCategory;
   String? sId;
   String? name;
@@ -44,10 +44,10 @@ class _Contacts {
   String? alternateMobile;
   String? notes;
 
-  _Contacts(groupCategory, sId, name, company, title, mobile, email, image,
+  ContactsAPI(groupCategory, sId, name, company, title, mobile, email, image,
       userId, iV, alternateMobile, notes);
 
-  _Contacts.fromJson(Map<String, dynamic> json) {
+  ContactsAPI.fromJson(Map<String, dynamic> json) {
     groupCategory = json['groupCategory'];
     sId = json['_id'];
     name = json['name'];

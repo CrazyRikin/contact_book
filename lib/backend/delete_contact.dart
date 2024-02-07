@@ -17,7 +17,5 @@ void deleteContactApi(String id) async {
 
   request.headers.addAll(headers);
 
-  http.StreamedResponse response = await request.send();
-  print(response.statusCode);
-  print(await response.stream.bytesToString());
+  await request.send();
 }
