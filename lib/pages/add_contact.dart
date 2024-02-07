@@ -1,4 +1,5 @@
 import 'package:contact_book/services/providers/contacts_provider.dart';
+import 'package:contact_book/widgets/addContactsWidget/alert_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:contact_book/services/model/contact_model.dart';
@@ -37,15 +38,22 @@ class _AddContactsState extends State<AddContacts> {
             child: IconButton(
                 onPressed: () {
                   try {
-                    contactlistprovider.addContact(
-                        nameController.text,
-                        companyController.text,
-                        phoneController.text,
-                        titleController.text,
-                        workController.text,
-                        contactlistprovider.defaultGroup,
-                        contactlistprovider.defaultDepartment);
-                    Navigator.pop(context);
+                    if (nameController.text.isEmpty ||
+                        phoneController.text.isEmpty) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => const AlertBoxClass());
+                    } else {
+                      contactlistprovider.addContact(
+                          nameController.text,
+                          companyController.text,
+                          phoneController.text,
+                          titleController.text,
+                          workController.text,
+                          contactlistprovider.defaultGroup,
+                          contactlistprovider.defaultDepartment);
+                      Navigator.pop(context);
+                    }
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

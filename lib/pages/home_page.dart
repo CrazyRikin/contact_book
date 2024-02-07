@@ -1,3 +1,4 @@
+import 'package:contact_book/pages/add_contact.dart';
 import 'package:contact_book/services/providers/contacts_provider.dart';
 import 'package:contact_book/widgets/HomePageWidgets/contacts/contacts_list_builder.dart';
 import 'package:contact_book/widgets/HomePageWidgets/dashboard.dart';
@@ -14,6 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      Provider.of<ContactListProvider>(context, listen: false)
+          .loadContactsList();
+      print("success");
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<ContactListProvider>(
         builder: (context, contactlistprovider, child) => Scaffold(
@@ -25,9 +36,13 @@ class _HomePageState extends State<HomePage> {
                   child: contactlistprovider.registeredContacts.isEmpty
                       ? TextButton(
                           onPressed: () {
-                            contactlistprovider.loadContactsList();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AddContacts()));
                           },
-                          child: const Text("Click to fetch contacts!"))
+                          child: const Text(
+                              "No contacts found ! Click to add contacts!"))
                       : const Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
