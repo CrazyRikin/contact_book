@@ -48,6 +48,12 @@ dependencies:
   open_file: ^3.2.1
   http: ^1.2.0
   uuid: ^4.3.3
+  flutter_native_splash: ^2.3.10
+
+flutter_native_splash:
+    color: "#51AFF7"
+    image: "assets/splash_icon/contact.png"
+
   
 
 dev_dependencies:
